@@ -6,6 +6,7 @@ import { useRouter } from "next/router";
 import { RichText } from "prismic-dom";
 import { useEffect } from "react";
 import { getPrismicClient } from "../../../services/prismic";
+import { SessionWithSubscription } from "../../../shared/types";
 import styles from "../post.module.scss";
 
 interface PostProps {
@@ -21,7 +22,7 @@ export default function Post({ post }: PostProps) {
   const [session] = useSession();
   const router = useRouter();
   useEffect(() => {
-    if (session?.userSubscription) {
+    if ((session as SessionWithSubscription)?.userSubscription) {
       router.push(`/posts/${post.slug}`);
     }
   }, [session]);
