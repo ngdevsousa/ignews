@@ -2,6 +2,7 @@ import { signIn, useSession } from "next-auth/client";
 import { useRouter } from "next/router";
 import { api } from "../../services/api";
 import { getStripeClient } from "../../services/stripe-client";
+import { SessionWithSubscription } from "../../shared/types";
 import styles from "./styles.module.scss";
 
 interface SubscribeButtonProps {
@@ -18,7 +19,7 @@ export function SubscribeButton({ priceId }: SubscribeButtonProps) {
       return;
     }
 
-    if (session.userSubscription) {
+    if ((session as SessionWithSubscription)?.userSubscription) {
       router.push("/posts");
       return;
     }
